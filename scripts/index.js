@@ -66,24 +66,26 @@ function createUserDataForTesting(){
 
 function randomImage() {
     getElement('employeeDirectorySection').style.display = 'none';
-
-    allImages = getElement('employeeDirectorySection').querySelectorAll('img');
-
+    setDisplayBlock(getElement('loadingAnimation'));
+    const allImages = getElement('employeeDirectorySection').querySelectorAll('img');
+    const folderPath = '.\\resources\\empImages';
     let loadedImages = 0;
-
     allImages.forEach(function (item) {
-        fetch('https://source.unsplash.com/featured/?person')
-            .then(response => response.url)
-            .then(url => {
-                item.src = url;
-                loadedImages++;
+        const randomImageNumber = Math.floor(Math.random() * 43) + 1; 
+        const imagePath = `${folderPath}\\image${randomImageNumber}.jpg`; 
 
-                if (loadedImages === allImages.length) {
-                    showPage();
-                }
-            });
+        item.src = imagePath;
+        loadedImages++;
+
+        if (loadedImages === allImages.length) {
+            showPage();
+        }
     });
 }
+// this function is working perfect but not showing loding animation when images are loding , look for the issue
+
+
+
 
 function showPage() {
     getElement('employeeDirectorySection').style.display = 'grid';
